@@ -1,0 +1,662 @@
+[gd_scene load_steps=16 format=2]
+
+[ext_resource path="res://flappy monkee/sounds/buy.mp3" type="AudioStream" id=1]
+[ext_resource path="res://flappy monkee/player.tscn" type="PackedScene" id=2]
+[ext_resource path="res://flappy monkee/UI/SuperMario256.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://flappy monkee/main.gd" type="Script" id=4]
+[ext_resource path="res://flappy monkee/UI/new_theme.tres" type="Theme" id=5]
+[ext_resource path="res://flappy monkee/dedUI.gd" type="Script" id=6]
+[ext_resource path="res://flappy monkee/sounds/click.mp3" type="AudioStream" id=7]
+
+[sub_resource type="Animation" id=1]
+resource_name = "disco"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("lights/nightlight:light_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3, 0.6, 0.9 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 0.164706, 0.164706, 0.164706, 1 ), Color( 0, 1, 0.741176, 1 ), Color( 1, 0, 0, 1 ), Color( 0.992157, 1, 0, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("lights/daylight:light_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.3, 0.6, 0.9 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 0, 0.0627451, 1, 1 ), Color( 0.968627, 0.0117647, 1, 1 ), Color( 0.266667, 1, 0, 1 ) ]
+}
+
+[sub_resource type="SpatialMaterial" id=2]
+albedo_color = Color( 0.501961, 0.603922, 0.376471, 1 )
+
+[sub_resource type="SpatialMaterial" id=3]
+albedo_color = Color( 0.0941176, 0.545098, 0.505882, 1 )
+
+[sub_resource type="BoxShape" id=4]
+extents = Vector3( 4.96832, 0.620724, 4.66293 )
+
+[sub_resource type="RectangleShape2D" id=5]
+extents = Vector2( 300, 300 )
+
+[sub_resource type="DynamicFont" id=6]
+size = 27
+outline_size = 4
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=7]
+size = 32
+outline_size = 6
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=8]
+size = 24
+outline_size = 6
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 3 )
+
+[node name="main" type="Spatial"]
+script = ExtResource( 4 )
+
+[node name="player" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.65387, 0.609407, 3 )
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.130763, 8.221 )
+visible = false
+projection = 1
+current = true
+size = 10.0
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="SpotLight3" type="SpotLight" parent="."]
+transform = Transform( -1, 8.74228e-08, -1.77636e-15, -2.26267e-08, -0.258819, 0.965926, 8.44439e-08, 0.965926, 0.258819, 0, 6, 2.15738 )
+visible = false
+light_color = Color( 0, 0.647059, 1, 1 )
+light_energy = 2.76
+spot_range = 29.9
+spot_attenuation = 0.574349
+spot_angle = 29.6
+
+[node name="lights" type="AnimationPlayer" parent="."]
+playback_speed = 0.25
+anims/disco = SubResource( 1 )
+
+[node name="nightlight" type="DirectionalLight" parent="lights"]
+transform = Transform( 0.995689, 0.0122318, -0.0919428, 0, 0.991266, 0.131876, 0.0927529, -0.131307, 0.986993, 0, 5.36708, 10.5152 )
+visible = false
+light_color = Color( 0.164706, 0.164706, 0.164706, 1 )
+shadow_enabled = true
+
+[node name="daylight" type="DirectionalLight" parent="lights"]
+transform = Transform( 0.995689, 0.0122318, -0.0919428, 0, 0.991266, 0.131876, 0.0927529, -0.131307, 0.986993, 0, 5.36708, 10.5152 )
+shadow_enabled = true
+
+[node name="CSGBox" type="CSGBox" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7913, 0 )
+width = 11.3898
+height = 11.7192
+depth = 0.0710062
+material = SubResource( 2 )
+
+[node name="StaticBody" type="StaticBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.73466, 0 )
+collision_mask = 0
+
+[node name="CSGBox" type="CSGBox" parent="StaticBody"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.30553, 0 )
+width = 11.1704
+height = 0.733304
+depth = 9.68723
+material = SubResource( 3 )
+
+[node name="CollisionShape" type="CollisionShape" parent="StaticBody"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.606844, 0 )
+shape = SubResource( 4 )
+
+[node name="StaticBody2" type="StaticBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.49075, 0 )
+collision_mask = 0
+
+[node name="CSGBox" type="CSGBox" parent="StaticBody2"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.30553, 0 )
+width = 10.0226
+height = 0.733304
+depth = 9.68723
+material = SubResource( 3 )
+
+[node name="CollisionShape" type="CollisionShape" parent="StaticBody2"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.191577, 0 )
+shape = SubResource( 4 )
+
+[node name="obstacle_spawner" type="Timer" parent="."]
+wait_time = 2.0
+autostart = true
+
+[node name="obstacles" type="Spatial" parent="."]
+
+[node name="UI" type="Control" parent="."]
+pause_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TouchScreenButton" type="TouchScreenButton" parent="UI"]
+shape = SubResource( 5 )
+action = "ui_accept"
+
+[node name="ded" type="ColorRect" parent="UI"]
+pause_mode = 2
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 0.513726 )
+script = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ded" type="Label" parent="UI/ded"]
+anchor_top = 0.32
+anchor_right = 1.0
+anchor_bottom = 0.600333
+margin_top = -3.05176e-05
+margin_bottom = -0.200012
+text = "life is meaningless without pain
+
+Press enter to try again though"
+align = 1
+valign = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="ColorRect" type="ColorRect" parent="UI/ded"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 24.0
+margin_top = 440.0
+margin_right = -26.0
+margin_bottom = -60.0
+mouse_filter = 1
+input_pass_on_modal_close_click = false
+color = Color( 0.223529, 0.509804, 0.760784, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Button" parent="UI/ded/ColorRect"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+shortcut_in_tooltip = false
+text = "Points shop"
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="shop" type="ColorRect" parent="UI"]
+pause_mode = 2
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 0.513726 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="suit" type="Label" parent="UI/shop"]
+modulate = Color( 1, 0.705882, 0.94902, 1 )
+light_mask = 0
+anchor_top = 5.08627e-08
+anchor_right = 1.0
+anchor_bottom = 0.280333
+margin_top = -3.05176e-05
+margin_bottom = -0.200012
+custom_fonts/font = SubResource( 6 )
+text = "pimp my bird, eh?"
+align = 1
+valign = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="UI/shop"]
+light_mask = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 24.0
+margin_top = 456.0
+margin_right = -26.0
+margin_bottom = -44.0
+color = Color( 0.223529, 0.509804, 0.760784, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="leave" type="Button" parent="UI/shop/ColorRect"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+text = "go back to flapping"
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="stuff to buy" type="Control" parent="UI/shop"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -244.0
+margin_top = -188.0
+margin_right = -204.0
+margin_bottom = -148.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="models" type="Control" parent="UI/shop/stuff to buy"]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="cybertruck" type="Label" parent="UI/shop/stuff to buy/models"]
+margin_top = 16.0
+margin_right = 150.0
+margin_bottom = 80.0
+text = "cybertruck
+
+150 pts"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="UI/shop/stuff to buy/models/cybertruck"]
+show_behind_parent = true
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.698039, 0.772549, 0.337255, 1 )
+
+[node name="cybertruck" type="Button" parent="UI/shop/stuff to buy/models/cybertruck"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="sound" type="Label" parent="UI/shop/stuff to buy/models"]
+margin_left = 408.0
+margin_top = -72.0
+margin_right = 488.0
+text = "sound
+
+"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="UI/shop/stuff to buy/models/sound"]
+show_behind_parent = true
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.698039, 0.772549, 0.337255, 1 )
+
+[node name="sound" type="Button" parent="UI/shop/stuff to buy/models/sound"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="status3" type="Label" parent="UI/shop/stuff to buy/models/sound"]
+margin_left = 8.0
+margin_top = 40.0
+margin_right = 68.0
+margin_bottom = 72.0
+custom_fonts/font = SubResource( 7 )
+custom_colors/font_color = Color( 0, 1, 0.121569, 1 )
+text = "ON"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="default" type="Label" parent="UI/shop/stuff to buy/models"]
+margin_left = 168.0
+margin_top = 16.0
+margin_right = 320.0
+margin_bottom = 80.0
+text = "default
+
+0 pts"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="UI/shop/stuff to buy/models/default"]
+show_behind_parent = true
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.698039, 0.772549, 0.337255, 1 )
+
+[node name="default" type="Button" parent="UI/shop/stuff to buy/models/default"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="dababy" type="Label" parent="UI/shop/stuff to buy/models"]
+margin_left = 336.0
+margin_top = 16.0
+margin_right = 488.0
+margin_bottom = 80.0
+text = "dababy
+"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="UI/shop/stuff to buy/models/dababy"]
+show_behind_parent = true
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.698039, 0.772549, 0.337255, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="dababy" type="Button" parent="UI/shop/stuff to buy/models/dababy"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="UI/shop/stuff to buy/models/dababy"]
+anchor_left = 0.105263
+anchor_top = 0.547945
+anchor_right = 1.10526
+anchor_bottom = 1.54795
+rect_scale = Vector2( 0.783434, 0.74942 )
+custom_colors/font_color = Color( 0.694118, 1, 1, 1 )
+text = "get score>25
+as default"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="modifiers" type="Control" parent="UI/shop/stuff to buy"]
+margin_top = 96.0
+margin_right = 40.0
+margin_bottom = 136.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="night mode" type="Label" parent="UI/shop/stuff to buy/modifiers"]
+margin_left = 136.0
+margin_top = 104.0
+margin_right = 352.0
+margin_bottom = 224.0
+text = "night mode
+
+(cybertruck advised)
+
+200 pts"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="UI/shop/stuff to buy/modifiers/night mode"]
+show_behind_parent = true
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.698039, 0.772549, 0.337255, 1 )
+
+[node name="night_mode" type="Button" parent="UI/shop/stuff to buy/modifiers/night mode"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="status" type="Label" parent="UI/shop/stuff to buy/modifiers/night mode"]
+margin_left = 248.0
+margin_top = 47.0
+margin_right = 308.0
+margin_bottom = 79.0
+custom_fonts/font = SubResource( 7 )
+custom_colors/font_color = Color( 0, 1, 0.121569, 1 )
+text = "OFF"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="disco" type="Label" parent="UI/shop/stuff to buy/modifiers"]
+margin_top = 104.0
+margin_right = 104.0
+margin_bottom = 184.0
+text = "disco
+
+"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label2" type="Label" parent="UI/shop/stuff to buy/modifiers/disco"]
+anchor_left = -2.04049
+anchor_top = 2.60156
+anchor_right = -1.04049
+anchor_bottom = 3.60156
+margin_left = 212.211
+margin_top = -176.125
+margin_right = 239.211
+margin_bottom = -176.125
+rect_scale = Vector2( 0.783434, 0.74942 )
+custom_colors/font_color = Color( 0.694118, 1, 1, 1 )
+text = "get score>20
+with every
+model"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="ColorRect" type="ColorRect" parent="UI/shop/stuff to buy/modifiers/disco"]
+show_behind_parent = true
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.996078, 0.737255, 1, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="disco" type="Button" parent="UI/shop/stuff to buy/modifiers/disco"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="status2" type="Label" parent="UI/shop/stuff to buy/modifiers/disco"]
+margin_left = 24.0
+margin_top = 88.0
+margin_right = 84.0
+margin_bottom = 120.0
+custom_fonts/font = SubResource( 7 )
+custom_colors/font_color = Color( 0, 1, 0.121569, 1 )
+text = "OFF"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="dababy" type="Label" parent="UI/shop/stuff to buy/modifiers"]
+margin_left = 120.0
+margin_top = 8.0
+margin_right = 368.0
+margin_bottom = 80.0
+text = "current Model
+
+"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="UI/shop/stuff to buy/modifiers/dababy"]
+show_behind_parent = true
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.698039, 0.772549, 0.337255, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="status2" type="Label" parent="UI/shop/stuff to buy/modifiers/dababy"]
+anchor_left = 0.278
+anchor_top = 0.444
+anchor_right = 0.726
+anchor_bottom = 0.889
+margin_left = 0.0559921
+margin_top = 0.0319977
+margin_right = -0.0480042
+margin_bottom = -0.00800323
+custom_fonts/font = SubResource( 8 )
+custom_colors/font_color = Color( 0, 1, 0.121569, 1 )
+text = "default"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="buy" type="AudioStreamPlayer" parent="UI/shop"]
+stream = ExtResource( 1 )
+
+[node name="start" type="ColorRect" parent="UI"]
+pause_mode = 2
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 0.513726 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ded" type="Label" parent="UI/start"]
+anchor_top = 0.32
+anchor_right = 1.0
+anchor_bottom = 0.600333
+margin_top = -3.05176e-05
+margin_bottom = -0.200012
+text = "Hey, press enter to flap dem wings"
+align = 1
+valign = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="max_score" type="Label" parent="UI"]
+anchor_left = 0.0266667
+anchor_top = 0.0266667
+anchor_right = 0.171667
+anchor_bottom = 0.0266667
+margin_right = 40.0
+margin_bottom = 16.0
+text = "max score: 0"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="score" type="Label" parent="UI"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -84.0
+margin_top = 16.0
+margin_right = -8.0
+margin_bottom = 32.0
+text = "Score: 0"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="total_points" type="Label" parent="UI"]
+modulate = Color( 0.0235294, 1, 0.92549, 1 )
+anchor_left = 0.64
+anchor_top = 0.0266667
+anchor_right = 0.801667
+anchor_bottom = 0.0266667
+margin_right = 40.0
+margin_bottom = 16.0
+text = "Total Points:"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="click" type="AudioStreamPlayer" parent="UI"]
+stream = ExtResource( 7 )
+
+[connection signal="ded" from="player" to="." method="_on_player_ded"]
+[connection signal="timeout" from="obstacle_spawner" to="." method="_on_Timer_timeout"]
+[connection signal="pressed" from="UI/ded/ColorRect/Button" to="UI/ded" method="_on_Button_pressed"]
+[connection signal="pressed" from="UI/shop/ColorRect/leave" to="UI/ded" method="_on_leave_pressed"]
+[connection signal="pressed" from="UI/shop/stuff to buy/models/cybertruck/cybertruck" to="UI/ded" method="_on_cybertruck_pressed"]
+[connection signal="pressed" from="UI/shop/stuff to buy/models/sound/sound" to="UI/ded" method="_on_sound_pressed"]
+[connection signal="pressed" from="UI/shop/stuff to buy/models/default/default" to="UI/ded" method="_on_default_pressed"]
+[connection signal="pressed" from="UI/shop/stuff to buy/models/dababy/dababy" to="UI/ded" method="_on_dababy_pressed"]
+[connection signal="pressed" from="UI/shop/stuff to buy/modifiers/night mode/night_mode" to="UI/ded" method="_on_night_mode_pressed"]
+[connection signal="pressed" from="UI/shop/stuff to buy/modifiers/disco/disco" to="UI/ded" method="_on_disco_pressed"]

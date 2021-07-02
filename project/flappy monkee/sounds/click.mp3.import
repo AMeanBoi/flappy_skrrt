@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/click.mp3-e9cb19aa9d89e881bc6494d766fc2693.mp3str"
+
+[deps]
+
+source_file="res://flappy monkee/sounds/click.mp3"
+dest_files=[ "res://.import/click.mp3-e9cb19aa9d89e881bc6494d766fc2693.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

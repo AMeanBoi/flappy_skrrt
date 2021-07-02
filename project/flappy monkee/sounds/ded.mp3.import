@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/ded.mp3-a9e8004a0a986159e4a7789cc9ee3aaa.mp3str"
+
+[deps]
+
+source_file="res://flappy monkee/sounds/ded.mp3"
+dest_files=[ "res://.import/ded.mp3-a9e8004a0a986159e4a7789cc9ee3aaa.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0
